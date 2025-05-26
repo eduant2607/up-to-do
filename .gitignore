@@ -1,0 +1,17 @@
+# Node
+node_modules/
+npm-debug.log
+
+# Firebase
+.firebaserc
+firebase-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Env vars
+.env
