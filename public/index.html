@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🚀Up-To-Do</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚀 Up-To-Do</title>
+
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="./src/styles/global.css" />
+
   <style>
     body {
       margin: 0;
@@ -31,15 +35,21 @@
     }
   </style>
 </head>
+
 <body>
   <h1>🚀 Up-To-Do</h1>
   <p>Su red de conexiones para servicios está <span class="highlight">bajo construcción!</span>.</p>
-  <p>Estamos creando algo muy emocionante. Esten al pendiente!</p>
+  <p>Estamos creando algo muy emocionante. ¡Estén al pendiente!</p>
 
-<!--This is to connect Firebase into the page!-->
+  <div id="app"></div>
+
+  <!-- Firebase Test -->
   <script type="module">
-  import { auth } from "../src/services/firebase.js";
-  console.log("Firebase Auth loaded:", auth);
-</script>
+    import { auth } from "../src/services/firebase.js";
+    console.log("✅ Firebase Auth loaded:", auth);
+  </script>
+
+  <!-- Main App Logic -->
+  <script type="module" src="../src/index.js"></script>
 </body>
 </html>
