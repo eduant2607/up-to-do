@@ -1,4 +1,7 @@
-// src/utils/firebase-config.example.js
+// src/utils/firebase-config.js
+// In here you will add all the configs that firebase will throw at you
+// Remeber to keep them private!
+
 export const firebaseConfig = {
   apiKey: "YOUR_API_KEY_HERE",
   authDomain: "up-to-do.firebaseapp.com",
