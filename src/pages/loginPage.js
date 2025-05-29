@@ -1,7 +1,7 @@
 // src/pages/loginPage.js
 //This file will use render login and call FirebaseAuth
 import { renderLogin } from "../components/Login.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from "../services/firebase.js";
 
 export function showLoginPage(rootElement, onSuccess) {
