@@ -1,6 +1,7 @@
 import { showLoginPage } from './pages/loginPage.js';
 import { showDashboard } from './pages/dashboardPage.js';
 import { showRegisterPage } from './pages/registerPage.js';
+import { showBrowsePage } from './pages/browsePage.js';
 import { auth } from './services/firebase.js';
 
 const appRoot = document.getElementById('app');
@@ -13,7 +14,7 @@ function router() {
   // appRoot.innerHTML = ''; // Clearing here might be too broad if pages want to manage transitions.
 
   switch (route) {
-    case '#login':
+    case '#/login':
       if (currentUser) {
         window.location.hash = '#dashboard';
         break;
@@ -25,7 +26,7 @@ function router() {
         window.location.hash = '#dashboard';
       });
       break;
-    case '#register':
+    case '#/register':
       if (currentUser) {
         window.location.hash = '#dashboard';
         break;
@@ -37,13 +38,25 @@ function router() {
         window.location.hash = '#dashboard';
       });
       break;
+    case '#/browse':
+      if (!currentUser) {
+        const storedUser = sessionStorage.getItem('currentUser');
+        if (storedUser) {
+          currentUser = JSON.parse(storedUser);
+        } else {
+          window.location.hash = '#/login'; // Corrected
+          break;
+        }
+      }
+      showBrowsePage(appRoot);
+      break;
     case '#dashboard':
       if (!currentUser) {
         const storedUser = sessionStorage.getItem('currentUser');
         if (storedUser) {
           currentUser = JSON.parse(storedUser);
         } else {
-          window.location.hash = '#login';
+          window.location.hash = '#/login'; // Corrected
           break;
         }
       }
@@ -52,13 +65,13 @@ function router() {
           currentUser = null;
           sessionStorage.removeItem('currentUser');
           // alert('Has cerrado sesión.'); // Alert can be part of showDashboard or here
-          window.location.hash = '#login';
+          window.location.hash = '#/login'; // Corrected
         }).catch(error => {
           console.error("Error during sign out:", error);
           // Still attempt to clear session and redirect
           currentUser = null;
           sessionStorage.removeItem('currentUser');
-          window.location.hash = '#login';
+          window.location.hash = '#/login'; // Corrected
         });
       });
       break;
@@ -68,7 +81,7 @@ function router() {
           currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
           window.location.hash = '#dashboard';
       } else {
-          window.location.hash = '#login';
+          window.location.hash = '#/login'; // Corrected
       }
   }
 }
@@ -79,15 +92,15 @@ window.addEventListener('DOMContentLoaded', () => {
   const storedUser = sessionStorage.getItem('currentUser');
   if (storedUser) {
     currentUser = JSON.parse(storedUser);
-    // If user is stored and hash is empty, '#', '#login' or '#register', redirect to dashboard.
+    // If user is stored and hash is empty, '#', '#/login' or '#/register', redirect to dashboard.
     // This prevents logged-in users from landing on login/register unless explicitly navigating back.
-    if (['', '#', '#login', '#register'].includes(window.location.hash)) {
+    if (['', '#', '#/login', '#/register'].includes(window.location.hash)) { // Corrected
       window.location.hash = '#dashboard';
     }
   } else {
     // If no user, and not trying to register or already on login, force login.
-    if (window.location.hash !== '#register' && window.location.hash !== '#login') {
-      window.location.hash = '#login';
+    if (window.location.hash !== '#/register' && window.location.hash !== '#/login') { // Corrected
+      window.location.hash = '#/login'; // Corrected
     }
   }
   // Initial call to router to load the correct page based on hash or updated hash.
