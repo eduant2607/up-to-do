@@ -13,4 +13,12 @@ export function showLoginPage(rootElement, onSuccess) {
 
   rootElement.innerHTML = "";
   rootElement.appendChild(loginComponent);
+
+  const registerLink = loginComponent.querySelector('#register-link');
+  if (registerLink) {
+    registerLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.location.hash = '#register';
+    });
+  }
 }
