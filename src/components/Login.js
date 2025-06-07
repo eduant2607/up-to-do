@@ -11,6 +11,9 @@ export function renderLogin(onLogin) {
       <input type="password" id="password" placeholder="Contraseña" required />
       <button type="submit">Entrar</button>
     </form>
+    <p class="mt-4 text-center">
+      No tienes cuenta? <a href="#register" id="register-link" class="text-blue-500 hover:underline">Regístrate</a>
+    </p>
     <p id="login-error" style="color:red;"></p>
   `;
 
