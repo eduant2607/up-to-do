@@ -6,6 +6,9 @@ export function showDashboard(rootElement, user, onLogout) {
       <button id="logout-btn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
         Cerrar sesión
       </button>
+      <button id="buscar-servicios-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+        Buscar Servicios
+      </button>
     </div>
   `;
 
@@ -20,6 +23,13 @@ export function showDashboard(rootElement, user, onLogout) {
     // For this simple case, this is fine.
     logoutBtn.addEventListener("click", () => {
         onLogout();
+    });
+  }
+
+  const buscarServiciosBtn = document.getElementById("buscar-servicios-btn");
+  if (buscarServiciosBtn) {
+    buscarServiciosBtn.addEventListener("click", () => {
+      window.location.hash = '#/browse';
     });
   }
 }
