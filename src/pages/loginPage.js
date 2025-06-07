@@ -18,7 +18,7 @@ export function showLoginPage(rootElement, onSuccess) {
   if (registerLink) {
     registerLink.addEventListener('click', (event) => {
       event.preventDefault();
-      window.location.hash = '#register';
+      window.location.hash = '#/register';
     });
   }
 }
