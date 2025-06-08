@@ -2,6 +2,7 @@ import { showLoginPage } from './pages/loginPage.js';
 import { showDashboard } from './pages/dashboardPage.js';
 import { showRegisterPage } from './pages/registerPage.js';
 import { showBrowsePage } from './pages/browsePage.js';
+import { showPostServicePage } from './pages/postServicePage.js';
 import { auth } from './services/firebase.js';
 
 const appRoot = document.getElementById('app');
@@ -74,6 +75,18 @@ function router() {
           window.location.hash = '#/login'; // Corrected
         });
       });
+      break;
+    case '#/post-service':
+      if (!currentUser) {
+        const storedUser = sessionStorage.getItem('currentUser');
+        if (storedUser) {
+          currentUser = JSON.parse(storedUser);
+        } else {
+          window.location.hash = '#/login';
+          break;
+        }
+      }
+      showPostServicePage(appRoot);
       break;
     default:
       // Fallback logic based on current user status

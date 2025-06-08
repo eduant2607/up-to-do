@@ -9,6 +9,9 @@ export function showDashboard(rootElement, user, onLogout) {
       <button id="buscar-servicios-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
         Buscar Servicios
       </button>
+      <button id="post-service-btn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">
+        Publicar Servicio
+      </button>
     </div>
   `;
 
@@ -30,6 +33,13 @@ export function showDashboard(rootElement, user, onLogout) {
   if (buscarServiciosBtn) {
     buscarServiciosBtn.addEventListener("click", () => {
       window.location.hash = '#/browse';
+    });
+  }
+
+  const postServiceBtn = document.getElementById("post-service-btn");
+  if (postServiceBtn) {
+    postServiceBtn.addEventListener("click", () => {
+      window.location.hash = '#/post-service';
     });
   }
 }
