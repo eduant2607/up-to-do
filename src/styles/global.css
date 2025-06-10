@@ -10,3 +10,92 @@ input, button {
   padding: 10px;
   font-size: 16px;
 }
+
+/* Styles for Services Feed Page */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Space between cards */
+  margin-bottom: 20px;
+}
+
+.service-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.service-title {
+  font-size: 1.25rem; /* Tailwind class: text-xl */
+  font-weight: 600; /* Tailwind class: font-semibold */
+  margin-bottom: 8px; /* Tailwind class: mb-2 */
+  color: #333;
+}
+
+.service-category {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.service-description {
+  font-size: 1rem; /* Tailwind class: text-base */
+  color: #444;
+  margin-bottom: 12px; /* Tailwind class: mb-3 */
+  flex-grow: 1; /* Makes description take available space */
+}
+
+.service-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007bff; /* Blue color for price */
+  margin-top: auto; /* Pushes price to the bottom if cards have different heights */
+}
+
+/* Ensure global.css styles don't conflict heavily if Tailwind-like classes are used in JS for page structure */
+.p-4 { padding: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mt-6 { margin-top: 1.5rem; }
+.text-2xl { font-size: 1.5rem; }
+.font-semibold { font-weight: 600; }
+.bg-gray-500 { background-color: #6c757d; } /* Example gray */
+.hover\:bg-gray-700:hover { background-color: #495057; } /* Darker gray on hover */
+.text-white { color: #fff; }
+.font-bold { font-weight: bold; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.rounded { border-radius: 0.25rem; }
+
+/* Added Tailwind-like classes for servicesFeedPage category sections */
+.mb-8 { margin-bottom: 2rem; }
+.pb-2 { padding-bottom: 0.5rem; }
+.border-b { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ddd; } /* Example border color */
+.text-xl { font-size: 1.25rem; }
+
+/* Dashboard Button Color Fixes */
+.bg-red-500 { background-color: #EF4444; } /* Red */
+.hover\:bg-red-700:hover { background-color: #B91C1C; } /* Darker Red */
+
+.bg-blue-500 { background-color: #3B82F6; } /* Blue */
+.hover\:bg-blue-700:hover { background-color: #1D4ED8; } /* Darker Blue */
+
+.bg-green-500 { background-color: #22C55E; } /* Green */
+.hover\:bg-green-700:hover { background-color: #15803D; } /* Darker Green */
+
+/* Ensure buttons have a default text color if not specified, e.g. text-white is used */
+/* .text-white { color: #FFFFFF; } is already there, which is good. */
+
+/* General button styling improvement for consistency if needed */
+button {
+  border: none; /* Remove default border if any */
+  /* padding: 10px; is already there */
+  /* font-size: 16px; is already there */
+  /* rounded class handles border-radius */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out; /* Smooth hover transition */
+}

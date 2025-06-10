@@ -1,7 +1,7 @@
 import { showLoginPage } from './pages/loginPage.js';
 import { showDashboard } from './pages/dashboardPage.js';
 import { showRegisterPage } from './pages/registerPage.js';
-import { showBrowsePage } from './pages/browsePage.js';
+import { showServicesFeedPage } from './pages/servicesFeedPage.js';
 import { showPostServicePage } from './pages/postServicePage.js';
 import { auth } from './services/firebase.js';
 
@@ -39,7 +39,7 @@ function router() {
         window.location.hash = '#dashboard';
       });
       break;
-    case '#/browse':
+    case '#/services-feed':
       if (!currentUser) {
         const storedUser = sessionStorage.getItem('currentUser');
         if (storedUser) {
@@ -49,7 +49,7 @@ function router() {
           break;
         }
       }
-      showBrowsePage(appRoot);
+      showServicesFeedPage(appRoot);
       break;
     case '#dashboard':
       if (!currentUser) {
