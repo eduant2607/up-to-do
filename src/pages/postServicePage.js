@@ -1,3 +1,6 @@
+import { auth, db } from "../../services/firebase.js";
+import { collection, addDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 export function showPostServicePage(rootElement) {
   rootElement.innerHTML = `
     <div class="p-4">
@@ -45,23 +48,41 @@ export function showPostServicePage(rootElement) {
   const form = rootElement.querySelector('#post-service-form');
   const backToDashboardBtn = rootElement.querySelector('#back-to-dashboard-btn');
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
+
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Debes iniciar sesión para publicar un servicio.");
+      return;
+    }
+
     const title = rootElement.querySelector('#service-title').value;
     const description = rootElement.querySelector('#service-description').value;
     const category = rootElement.querySelector('#service-category').value;
-    const price = rootElement.querySelector('#service-price').value;
+    const priceString = rootElement.querySelector('#service-price').value;
+
+    // Consider if price can be non-numeric, e.g., "A convenir"
+    // If so, store as string or have a different field for numeric price
+    const price = parseFloat(priceString); 
 
     const serviceData = {
       title,
       description,
       category,
-      price,
+      price, // Ensure this is stored appropriately (number or string)
+      userEmail: user.email,
+      createdAt: Timestamp.fromDate(new Date())
     };
 
-    console.log('Service Data:', serviceData);
-    alert('Servicio publicado con éxito');
-    window.location.hash = '#/dashboard';
+    try {
+      await addDoc(collection(db, "services"), serviceData);
+      alert('Servicio publicado con éxito!');
+      window.location.hash = '#/dashboard';
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert('Error al publicar el servicio. Inténtalo de nuevo.');
+    }
   });
 
   backToDashboardBtn.addEventListener('click', () => {

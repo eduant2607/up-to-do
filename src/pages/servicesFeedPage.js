@@ -1,42 +1,35 @@
-export function showServicesFeedPage(rootElement) {
-  const services = [
-    {
-      title: "Plomería Profesional",
-      description: "Reparaciones e instalaciones de plomería en general. Atención rápida y eficiente.",
-      category: "Plomería",
-      price: "A convenir",
-    },
-    {
-      title: "Diseño Web Moderno",
-      description: "Creación de sitios web responsivos y optimizados para SEO. Ideal para pequeñas y medianas empresas.",
-      category: "Programación",
-      price: "$500+",
-    },
-    {
-      title: "Clases de Guitarra",
-      description: "Clases personalizadas de guitarra para todos los niveles. Aprende tus canciones favoritas.",
-      category: "Clases Particulares",
-      price: "$20/hora",
-    },
-    {
-      title: "Carpintería a Medida",
-      description: "Fabricación y reparación de muebles. Trabajos en madera de alta calidad.",
-      category: "Carpintería",
-      price: "Consultar",
-    },
-    {
-      title: "Instalaciones Eléctricas Seguras",
-      description: "Servicio completo de instalaciones y reparaciones eléctricas para el hogar y la oficina.",
-      category: "Electricista",
-      price: "$50/hr",
-    },
-    {
-      title: "Mudanza Express",
-      description: "Servicio de fletes y mudanzas pequeñas y medianas. Rápido y confiable.",
-      category: "Fletes y Mudanzas",
-      price: "Desde $100",
+import { db } from "../../services/firebase.js";
+import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+export async function showServicesFeedPage(rootElement) {
+  rootElement.innerHTML = '<p class="text-center p-8">Cargando servicios...</p>';
+
+  let services = [];
+  try {
+    const servicesRef = collection(db, "services");
+    const q = query(servicesRef, orderBy("createdAt", "desc"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      services.push({ id: doc.id, ...doc.data() });
+    });
+  } catch (error) {
+    console.error("Error fetching services: ", error);
+    rootElement.innerHTML = `
+      <div class="p-4 text-center">
+        <p class="text-red-500">Error al cargar los servicios. Inténtalo de nuevo más tarde.</p>
+        <button id="back-to-dashboard-btn" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-6">
+          Volver al Dashboard
+        </button>
+      </div>`;
+    // Re-attach event listener for the button in error case
+    const backToDashboardBtnOnError = document.getElementById('back-to-dashboard-btn');
+    if (backToDashboardBtnOnError) {
+      backToDashboardBtnOnError.addEventListener('click', () => {
+        window.location.hash = '#dashboard';
+      });
     }
-  ];
+    return;
+  }
 
   const categories = [
     "Plomería",
@@ -61,12 +54,15 @@ export function showServicesFeedPage(rootElement) {
   `;
   if (services.length > 0) {
     services.forEach(service => {
+      // Ensure price is displayed correctly, especially if it's a number
+      const displayPrice = typeof service.price === 'number' ? `$${service.price.toFixed(2)}` : service.price;
       pageHTML += `
         <div class="service-card">
           <h4 class="service-title">${service.title}</h4>
           <p class="service-category">Categoría: ${service.category}</p>
           <p class="service-description">${service.description}</p>
-          <p class="service-price">Precio: ${service.price}</p>
+          <p class="service-price">Precio: ${displayPrice}</p> 
+          ${service.userEmail ? `<p class="text-xs text-gray-500 pt-2">Publicado por: ${service.userEmail}</p>` : ''}
         </div>
       `;
     });
@@ -85,12 +81,14 @@ export function showServicesFeedPage(rootElement) {
     const servicesInCategory = services.filter(service => service.category === category);
     if (servicesInCategory.length > 0) {
       servicesInCategory.forEach(service => {
+        const displayPrice = typeof service.price === 'number' ? `$${service.price.toFixed(2)}` : service.price;
         pageHTML += `
           <div class="service-card">
             <h4 class="service-title">${service.title}</h4>
             <p class="service-category">Categoría: ${service.category}</p>
             <p class="service-description">${service.description}</p>
-            <p class="service-price">Precio: ${service.price}</p>
+            <p class="service-price">Precio: ${displayPrice}</p>
+            ${service.userEmail ? `<p class="text-xs text-gray-500 pt-2">Publicado por: ${service.userEmail}</p>` : ''}
           </div>
         `;
       });
