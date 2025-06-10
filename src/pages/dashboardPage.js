@@ -7,7 +7,7 @@ export function showDashboard(rootElement, user, onLogout) {
         Cerrar sesión
       </button>
       <button id="buscar-servicios-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
-        Buscar Servicios
+        Ver Servicios
       </button>
       <button id="post-service-btn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">
         Publicar Servicio
@@ -32,7 +32,7 @@ export function showDashboard(rootElement, user, onLogout) {
   const buscarServiciosBtn = document.getElementById("buscar-servicios-btn");
   if (buscarServiciosBtn) {
     buscarServiciosBtn.addEventListener("click", () => {
-      window.location.hash = '#/browse';
+      window.location.hash = '#/services-feed';
     });
   }
 
